@@ -1,0 +1,75 @@
+<div layout="vertical" layout-fill>
+
+  <md-content style="width: 100%;">
+    <header>
+      <acme-navbar creation-date="main.creationDate"></acme-navbar>
+    </header>
+
+    <md-grid-list md-cols="4" md-row-height="50px" flex="100" class="top-header">
+        <md-grid-tile md-colspan="1" md-rowspan="1" ng-click="main.setFilter('singers')">Исполнитель</md-grid-tile>
+        <md-grid-tile md-colspan="1" md-rowspan="1" ng-click="main.setFilter('single')">Песня</md-grid-tile>
+        <md-grid-tile md-colspan="1" md-rowspan="1" ng-click="main.setFilter('genre')">Жанр</md-grid-tile>
+        <md-grid-tile md-colspan="1" md-rowspan="1" ng-click="main.setFilter('year')">Год</md-grid-tile>
+    </md-grid-list>
+
+
+    <div layout="row" >
+          <div flex layout-padding>
+              <md-autocomplete
+                      md-selected-item="main.selectedSingers"
+                      md-search-text="main.singer"
+                      md-search-text-change="main.search.singers = main.singer"
+                      md-selected-item-change="main.search.singers = main.singer"
+                      md-items="item in main.singers"
+                      md-item-text="item.display"
+                      md-min-length="0"
+                      placeholder="Исполнитель">
+                  <md-item-template>
+                      <span md-highlight-flags="^i">{{item.display}}</span>
+                  </md-item-template>
+              </md-autocomplete>
+          </div >
+          <div flex layout-padding>
+          </div>
+          <div flex layout-padding>
+              <md-autocomplete
+                      md-selected-item="main.selectedGenre"
+                      md-search-text="main.genre"
+                      md-search-text-change="main.search.genre = main.genre"
+                      md-selected-item-change="main.search.genre = main.genre"
+                      md-items="item in main.genres"
+                      md-item-text="item.display"
+                      md-min-length="0"
+                      placeholder="Жанр">
+                  <md-item-template>
+                      <span md-highlight-flags="^i">{{item.display}}</span>
+                  </md-item-template>
+              </md-autocomplete>
+          </div >
+          <div flex layout-padding>
+              <md-autocomplete
+                      md-selected-item="main.selectedYear"
+                      md-search-text="main.year"
+                      md-search-text-change="main.search.year = main.year"
+                      md-selected-item-change="main.search.year = main.year"
+                      md-items="item in main.years"
+                      md-item-text="item.display"
+                      md-min-length="0"
+                      placeholder="Год">
+                  <md-item-template>
+                      <span md-highlight-text="main.year" md-highlight-flags="^i">{{item.display}}</span>
+                  </md-item-template>
+              </md-autocomplete>
+          </div >
+      </div>
+
+    <md-grid-list md-cols="4" md-row-height="50px"  flex="100" ng-repeat="item in main.data | filter :main.search | orderBy:main.filter">
+        <md-grid-tile md-colspan="1" md-rowspan="1">{{item.singers}}</md-grid-tile>
+        <md-grid-tile md-colspan="1" md-rowspan="1">{{item.single}}</md-grid-tile>
+        <md-grid-tile md-colspan="1" md-rowspan="1">{{item.genre}}</md-grid-tile>
+        <md-grid-tile md-colspan="1" md-rowspan="1">{{item.year}}</md-grid-tile>
+    </md-grid-list>
+
+  </md-content>
+
+</div>
