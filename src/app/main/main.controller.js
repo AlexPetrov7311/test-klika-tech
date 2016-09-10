@@ -1,5 +1,5 @@
 export class MainController {
-  constructor($timeout, webDevTec, toastr) {
+  constructor() {
     'ngInject';
 
 
@@ -39,7 +39,7 @@ export class MainController {
     let genresArray = [];
     let genres = {};
     this.data.forEach(function (item) {
-      if (genres[item.genre] === undefined) {
+      if (genres[item.genre] === angular.isUndefined) {
         genres[item.genre] = item;
         genresArray.push({
           value: item.genre,
@@ -52,7 +52,7 @@ export class MainController {
     let yearsArray = [];
     let years = {};
     this.data.forEach( (item) => {
-      if (years[item.year] === undefined) {
+      if (years[item.year] === angular.isUndefined) {
         years[item.year] = item;
         yearsArray.push({
           value: item.year,
@@ -66,7 +66,7 @@ export class MainController {
     let singersArray = [];
     let singers = {};
     this.data.forEach( (item)=> {
-      if (singers[item.singers] === undefined) {
+      if (singers[item.singers] === angular.isUndefined) {
         singers[item.singers] = item;
         singersArray.push({
           value: item.singers,
@@ -81,14 +81,13 @@ export class MainController {
     this.filter = "";
 
     this.setFilter = (filterString) =>{
-      console.log(filterString);
+      angular.log(filterString);
       if (this.filter==filterString){
         this.filter = '-'+filterString;
       }else {
         this.filter = filterString;
       }
-      console.log(this.filter);
 
     }
   }
-};
+}
