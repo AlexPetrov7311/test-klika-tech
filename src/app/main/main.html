@@ -1,75 +1,62 @@
 <div layout="vertical" layout-fill>
 
-  <md-content style="width: 100%;">
+  <md-content style="width: 80%;margin: auto;">
     <header>
       <acme-navbar creation-date="main.creationDate"></acme-navbar>
     </header>
 
-    <md-grid-list md-cols="4" md-row-height="50px" flex="100" class="top-header">
-        <md-grid-tile md-colspan="1" md-rowspan="1" ng-click="main.setFilter('singers')">Исполнитель</md-grid-tile>
-        <md-grid-tile md-colspan="1" md-rowspan="1" ng-click="main.setFilter('single')">Песня</md-grid-tile>
-        <md-grid-tile md-colspan="1" md-rowspan="1" ng-click="main.setFilter('genre')">Жанр</md-grid-tile>
-        <md-grid-tile md-colspan="1" md-rowspan="1" ng-click="main.setFilter('year')">Год</md-grid-tile>
-    </md-grid-list>
-
-
-    <div layout="row" >
-          <div flex layout-padding>
-              <md-autocomplete
-                      md-selected-item="main.selectedSingers"
-                      md-search-text="main.singer"
-                      md-search-text-change="main.search.singers = main.singer"
-                      md-selected-item-change="main.search.singers = main.singer"
-                      md-items="item in main.singers"
-                      md-item-text="item.display"
-                      md-min-length="0"
-                      placeholder="Исполнитель">
-                  <md-item-template>
-                      <span md-highlight-flags="^i">{{item.display}}</span>
-                  </md-item-template>
-              </md-autocomplete>
-          </div >
-          <div flex layout-padding>
+    <div class="flex-block">
+      <div class="list-block">
+        <div class="caption">Плейлист</div>
+        <div class="table-block">
+          <div class="header row">
+            <div class="cell" ng-click="main.setFilter('singers')">Исполнитель</div>
+            <div class="cell" ng-click="main.setFilter('single')">Песня</div>
+            <div class="cell" ng-click="main.setFilter('genre')">Жанр</div>
+            <div class="cell" ng-click="main.setFilter('year')">Год</div>
           </div>
-          <div flex layout-padding>
-              <md-autocomplete
-                      md-selected-item="main.selectedGenre"
-                      md-search-text="main.genre"
-                      md-search-text-change="main.search.genre = main.genre"
-                      md-selected-item-change="main.search.genre = main.genre"
-                      md-items="item in main.genres"
-                      md-item-text="item.display"
-                      md-min-length="0"
-                      placeholder="Жанр">
-                  <md-item-template>
-                      <span md-highlight-flags="^i">{{item.display}}</span>
-                  </md-item-template>
-              </md-autocomplete>
-          </div >
-          <div flex layout-padding>
-              <md-autocomplete
-                      md-selected-item="main.selectedYear"
-                      md-search-text="main.year"
-                      md-search-text-change="main.search.year = main.year"
-                      md-selected-item-change="main.search.year = main.year"
-                      md-items="item in main.years"
-                      md-item-text="item.display"
-                      md-min-length="0"
-                      placeholder="Год">
-                  <md-item-template>
-                      <span md-highlight-text="main.year" md-highlight-flags="^i">{{item.display}}</span>
-                  </md-item-template>
-              </md-autocomplete>
-          </div >
+          <div class="row" ng-repeat="item in main.data | filter :main.search | orderBy:main.filter">
+            <div class="cell">{{item.singers}}</div>
+            <div class="cell">{{item.single}}</div>
+            <div class="cell">{{item.genre}}</div>
+            <div class="cell">{{item.year}}</div>
+          </div>
+        </div>
+        <div class="footer">
+          <pagination-directive count="main.custom.itemsCount" take="main.custom.take" activate="main.custom.activatePage"></pagination-directive>
+          <div class="taker">
+            <div class="take" ng-repeat="item in ['10','25','50','100']" ng-click="main.custom.take = item" ng-class="{'active':main.custom.take==item }">{{item}}</div>
+          </div>
+        </div>
       </div>
+      <div class="menu-block">
+        <div class="caption">Плейлист</div>
 
-    <md-grid-list md-cols="4" md-row-height="50px"  flex="100" ng-repeat="item in main.data | filter :main.search | orderBy:main.filter">
-        <md-grid-tile md-colspan="1" md-rowspan="1">{{item.singers}}</md-grid-tile>
-        <md-grid-tile md-colspan="1" md-rowspan="1">{{item.single}}</md-grid-tile>
-        <md-grid-tile md-colspan="1" md-rowspan="1">{{item.genre}}</md-grid-tile>
-        <md-grid-tile md-colspan="1" md-rowspan="1">{{item.year}}</md-grid-tile>
-    </md-grid-list>
+        <div class="filter-block">
+
+          <div class="title">Испольнитель</div>
+          <select ng-model="main.search.singers">
+            <option value="">Все</option>
+            <option value="{{item.value}}" ng-repeat="item in main.singers">{{item.display}}</option>
+          </select>
+
+          <div class="title">Жанр</div>
+          <select ng-model="main.search.genre">
+            <option value="">Все</option>
+            <option value="{{item.value}}" ng-repeat="item in main.genres">{{item.display}}</option>
+          </select>
+
+          <div class="title">Год</div>
+          <select ng-model="main.search.year">
+            <option value="">Все</option>
+            <option value="{{item.value}}" ng-repeat="item in main.years">{{item.display}}</option>
+          </select>
+        </div>
+      </div>
+    </div>
 
   </md-content>
+
+
 
 </div>

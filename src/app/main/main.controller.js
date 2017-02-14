@@ -39,7 +39,7 @@ export class MainController {
     let genresArray = [];
     let genres = {};
     this.data.forEach(function (item) {
-      if (genres[item.genre] === angular.isUndefined) {
+      if (angular.isUndefined(genres[item.genre])) {
         genres[item.genre] = item;
         genresArray.push({
           value: item.genre,
@@ -48,11 +48,12 @@ export class MainController {
       }
     });
     this.genres = genresArray;
+    console.log(this.genres);
 
     let yearsArray = [];
     let years = {};
     this.data.forEach( (item) => {
-      if (years[item.year] === angular.isUndefined) {
+      if (angular.isUndefined(years[item.year])) {
         years[item.year] = item;
         yearsArray.push({
           value: item.year,
@@ -66,7 +67,7 @@ export class MainController {
     let singersArray = [];
     let singers = {};
     this.data.forEach( (item)=> {
-      if (singers[item.singers] === angular.isUndefined) {
+      if (angular.isUndefined(singers[item.singers])) {
         singers[item.singers] = item;
         singersArray.push({
           value: item.singers,
@@ -81,7 +82,6 @@ export class MainController {
     this.filter = "";
 
     this.setFilter = (filterString) =>{
-      angular.log(filterString);
       if (this.filter==filterString){
         this.filter = '-'+filterString;
       }else {
@@ -89,5 +89,12 @@ export class MainController {
       }
 
     }
+
+    this.custom = {
+      itemsCount: 40,
+      take: 10,
+      activatePage: ()=>{}
+    };
+
   }
 }
